@@ -84,7 +84,6 @@ const loginUser = async (req, res, next) => {
     );
 
     const { password: _, ...userinfo } = user.toObject(); // remove password from user data
-
     res.status(200).json({ token, id: user._id, ...userinfo });
   } catch (error) {
     return next(new HttpError(error.message || 'Something went wrong', 500));
