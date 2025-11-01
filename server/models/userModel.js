@@ -10,7 +10,7 @@ const userSchema =new Schema({
     followers:[{type:Schema.Types.ObjectId,ref:"User"}],
     following:[{type:Schema.Types.ObjectId,ref:"User"}],
     bookmarks:[{type:Schema.Types.ObjectId,ref:"Post"}],
-    post:[{type:Schema.Types.ObjectId,ref:"post"}]
+    post:[{type:Schema.Types.ObjectId,ref:"Post"}]
 },{timestamps:true});
 
 const User = mongoose.model('User', userSchema);

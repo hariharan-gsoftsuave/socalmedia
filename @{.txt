@@ -1,0 +1,110 @@
+@{
+    ViewBag.Title = "Powering Up: Applications Open for E-Bike Charging Cabinets | Decoder";
+}
+
+@{
+    string absoluteurl = HttpContext.Current.Request.Url.AbsoluteUri;
+    ViewBag.pageUrl = absoluteurl;
+    ViewBag.ImagUrl = "asserts/articles/details_page/details-nyc-e-bike.png";
+    ViewBag.PostTitle = "Powering Up: Applications Open for E-Bike Charging Cabinets";
+    ViewBag.PostDescription = "The New York City Department of Transportation (DOT) is rolling out sidewalk charging stations...";
+}
+
+
+<input type="hidden" id="latest_story" value="1" />
+<section id="details_section">
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-lg-7 col-md-7  padding_0 details_left">
+            <a href="/#latest-articles" class="back-to-home"><i class="left fa fa-chevron-left btn btn "></i>Back to Articles</a><div class="details_img">
+                <img src="~/asserts/articles/details_page/details-nyc-e-bike.png" alt="nyc-e-bike" />
+            </div>
+            <h2>
+                <span id="article_name">Powering Up: Applications Open for E-Bike Charging Cabinets</span>
+            </h2>
+            <div class="share-section">
+                <div class="icon-icon-calendar">
+                    <div class="date-div">
+                        <span class="date">
+                            03/23/2025
+                        </span>
+                    </div>
+                </div>
+                <div class="commet_share">
+                    <ul>
+                        <li><a id="twitter" data-network="twitter" class="st-custom-button comment st-hide-label"><span class="icon-icon-twitter"></span></a></li>
+                        <li><a id="facebook" data-network="facebook" class="st-custom-button comment st-hide-label"><span class="icon-icon-facebook"></span></a></li>
+                        <li><a id="linkedin" data-network="linkedin" class="st-custom-button comment st-hide-label"><span class="icon-icon-linkedin"></span></a></li>
+                        <li><a href="mailto:?subject=Powering Up: Applications Open for E-Bike Charging Cabinets=Article: https://www.decoderny.com/nyc-e-bike"><span class="icon-icon-mail"></span></a></li>
+                    </ul>
+                </div>
+                <span class="category_icons">
+                    <span class="icon-icon-architects icon-icon-categories" data-toggle="tooltip" title="Architects"></span>
+                    <span class="icon-icon-buildingowners icon-icon-categories" data-toggle="tooltip" title="Building Owners"></span>
+                    <span class="icon-icon-developers icon-icon-categories" data-toggle="tooltip" title="Developers"></span>
+                    <span class="icon-icon-engineers icon-icon-categories" data-toggle="tooltip" title="Engineers"></span>
+                </span>
+            </div>
+            <div class="describtion">
+                <p><b>Powering Up: Applications Open for E-Bike Charging Cabinets</b></p>
+
+<p>This summer, charging and battery stations for e-bike users will be the latest fixture of New York City sidewalks. Read on to find out why this new equipment could greatly decrease apartment fires, and how to obtain one for your block.</p>
+
+<p>In 2024 alone, lithium-ion batteries were responsible for 277 fires and 6 deaths – numbers that have increased annually, alongside the growing popularity of electric scooters, mopeds, and bikes. In an effort to prevent these fires, the New York City Department of Transportation (DOT) has proposed charging cabinets for e-bike users to replace their highly combustible batteries with a safer alternative. This new bill is part of a larger effort to mitigate the risks of lithium-ion batteries, alongside informational campaigns, heightened restrictions, and a new pilot program allowing e-bikes and other legal electric devices on park drives and greenways.</p>
+
+<p>"We must deliver safety to the people who deliver everything we want to our doorstep every day. That’s why we're making sure that safe charging and storage equipment can be on our streets, where on-demand delivery workers need it; that e-bike safety education is widespread and easy to access; and delivery workers have the chance to swap a dangerous bike and battery for a new one," said Deputy Mayor for Operations Meera Joshi in a recent press release. "In addition to these critical fire safety measures, we are hard at work with our partners in the City Council to create regulatory authority to more broadly control who uses our streets for profit and how."</p>
+
+<p>As of this April, applications are open for building owners and tenants to install charging cabinets on their sidewalks. On top of being convenient for e-bike users, the cabinets will help prevent apartment fires, providing an alternative storage space for tenants who keep their bikes indoors.</p>
+
+<p><b>In order to petition for a charging cabinet on your property, you must be a property owner or tenant of:</b></p>
+<ul>
+  <li>A residential building with 5 or more dwelling units; or</li>
+  <li>A building where the ground floor has a non-residential use</li>
+</ul>
+
+<p>The cabinets must be no more than 8 ft and 5 inches high, 4 ft wide, and 4 ft deep. They can be installed above a sidewalk vault or adjacent to a 90-degree or angled parking spot, as long as certain conditions are met. They must also leave an unobstructed clear path for pedestrian flow. A New York State (NYS) registered design professional must oversee the siting requirements for each cabinet. For more detailed guidelines, please review DOT’s revocable consent rules.</p>
+
+<p><b>Submitting a Petition of Revocable Consent</b></p>
+
+<p>Revocable consent (RC) is an agreement with the city that allows building owners or tenants the right to make improvements on New York City’s streets and sidewalks. Consent is given for a fixed term upon approval, but can be revoked at any time.</p>
+
+<p>According to the Department of Transportation (DOT), the application process takes an average of 12 months, occurring in three main phases:</p>
+<ol>
+  <li><b>Initial submission and development of plans:</b> During this phase, a petitioner submits an initial documentation package, then revises the design plans with DOT’s RC staff, if necessary. Plans are then distributed to the appropriate Council Member, Community Board, Borough President, and DOT Borough Commissioner for review. Finally, the petitioner works with DOT’s Urban Design unit to develop a proposal for approval by the New York City Public Design Commission (PDC).</li>
+  <li><b>The initial filing fee is $750</b>, the security deposit is $3000, and the fee for advertising for public hearing is $1,250. In total, the base fee is: <b>$5000</b>. If the application is approved, the petitioner is subject to a <b>$25 annual fee</b> for 10 years.</li>
+  <li><b>Submission approval and development of RC agreement:</b> Upon approval, the revocable consent agreement is drafted, and a public hearing is scheduled. The petitioner is eventually responsible for signing four copies of the agreement, paying a security deposit, paying advertising fees for the public hearing, and providing proof of insurance documentation.</li>
+  <li><b>Agreement approval and finalized registration:</b> As a final approval, DOT and the Mayor’s Office of Contract Services countersign the revocable consent agreement, then submit the agreement to the New York City Comptroller’s Office for registration.</li>
+</ol>
+<img src="~/asserts/articles/details_page/details-nyc-ebike-page.png" alt="detail Approval Timeline" width="600" />
+
+<p><b>Additional Costs</b></p>
+
+<p>On top of the $5000 base cost, make sure to prepare for the costs of a renewal, as well as various additional fees based on specifics of the proposal. These additional costs include:</p>
+<ul>
+  <li>Annual cost of maintaining the required insurance</li>
+  <li>Cost to hire NYS registered Professional Engineers (PE) or Registered Architects (RA) to create revocable consent drawings</li>
+  <li>Cost to hire PE or RA to generate a PDC submission</li>
+</ul>
+
+<p><b>After the 10-year term expires, applications may file for a renewal, which includes the following costs:</b></p>
+<ul>
+  <li>$500 renewal fee</li>
+  <li>$1,250 for renewal advertising for public hearing</li>
+  <li>Continued $25/year cost of maintaining insurance</li>
+  <li>Additional security deposit amount increases based on the Consumer Price Index</li>
+</ul>
+
+<p><b>Conclusion</b></p>
+
+<p>For more detailed guidance on how to file applications for e-bike charging cabinets, reach out to the experts at <a target="_blank" href="https://www.outsourceconsultants.com">Outsource Consultants, Inc.</a> for expert consultation on all things building code and zoning.</p>
+
+<p><b>Resources</b><br>
+<a target="_blank" href="https://www.nyc.gov/html/dot/downloads/pdf/sidewalk-e-bike-battery-swapping-charging-cabinets-101.pdf">Sidewalk E-Bike Battery Swapping and Charging Cabinets 101: How Property Owners and Tenants Can Apply</a></p>
+                <br />
+
+            </div>
+            @Html.Partial("_FormArticleDetails")
+            @Html.Partial("_ArticleDetailsLatestStories")
+        </div>
+        @Html.Partial("_ArticleDetailsLinks")
+    </div>
+</section>

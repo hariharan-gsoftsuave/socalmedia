@@ -17,7 +17,6 @@ const cloudinary = require('cloudinary').v2;
 const registerUser = async (req, res, next) => {
   try {
     const { fullName, email, password, confirmpassword } = req.body;
-
     if (!fullName || !email || !password || !confirmpassword) {
       return next(new HttpError('Fill in all fields', 422));
     }
@@ -240,12 +239,12 @@ const changeUserAvatar = async (req, res, next) => {
         res.status(200).json(updatedUser);
 
       } catch (cloudErr) {
-        return next(new HttpError(cloudErr.message || "Cloudinary upload failed", 500));
+        return next(new HttpError(cloudErr ||"Cloudinary upload failed", 500));
       }
     });
 
   } catch (error) {
-    return next(new HttpError(error.message || "Something went wrong", 500));
+    return next(new HttpError(error || "Something went wrong", 500));
   }
 };
 
