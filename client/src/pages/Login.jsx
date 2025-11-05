@@ -4,10 +4,12 @@ import { login } from "../utils/auth";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { userActions } from "../store/user-slice";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
 
@@ -30,8 +32,8 @@ const Login = () => {
             localStorage.setItem("currentUser", JSON.stringify(user));
 
             // Update Redux
-            dispatch(userActions.changeCurrentUser(user));
             navigate("/");
+            dispatch(userActions.changeCurrentUser(user));
           }
         }catch (err){
           setError(err?.response?.data?.message || "login failed");
@@ -44,7 +46,17 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="d-flex flex-column gap-3 m-5">
         {error && <p className="form__error-message bg-danger form__error-message m-0 p-2 rounded-3 text-bg-danger text-center">{error}</p>}
         <input type="email" placeholder="Email" className="border p-2 rounded" onChange={(e) => setForm({ ...form, email: e.target.value })} />
-        <input type="password" placeholder="Password" className="border p-2 rounded" onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        <div className="password__controller">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password border p-2 rounded"
+                      placeholder="Password"
+                      onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    />
+                    <span className="password__icon" onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                  </div>
         <button type="submit" className="bg-blue-600 text-white py-2 rounded">Login</button>
       </form>
       <p className="text-center mt-3">

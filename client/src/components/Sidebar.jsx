@@ -11,12 +11,6 @@ import "../index.css";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-
-  const openThemeModal = (e) => {
-    e.preventDefault();
-    dispatch(uiSliceActions.openThemeModal());
-  };
-
   return (
     <menu className="sidebar">
       <NavLink
@@ -28,7 +22,7 @@ const Sidebar = () => {
         <i className="sidebar_icon">
           <AiOutlineHome />
         </i>
-        <p>Home</p>
+        Home
       </NavLink>
 
       <NavLink
@@ -40,7 +34,7 @@ const Sidebar = () => {
         <i className="sidebar_icon">
           <GoMail />
         </i>
-        <p>Messages</p>
+        Messages
       </NavLink>
 
       <NavLink
@@ -52,14 +46,14 @@ const Sidebar = () => {
         <i className="sidebar_icon">
           <FaBookmark />
         </i>
-        <p>Bookmarks</p>
+        Bookmarks
       </NavLink>
 
-      <a href="#" className="sidebar_item d-flex gap-2" onClick={openThemeModal}>
+      <a href="#" className="sidebar_item d-flex gap-2" onClick={() => dispatch(uiSliceActions.openThemeModal())}>
         <i className="sidebar_icon">
           <PiPaintBrushBold />
         </i>
-        <p>Themes</p>
+        Themes
       </a>
     </menu>
   );

@@ -1,5 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
+import { GoMail } from "react-icons/go";
+import { FaBookmark } from "react-icons/fa";
+import { AiOutlineHome } from "react-icons/ai";
 import "../index.css";
 import ProfileImage from "./ProfileImage"; // Ensure file name matches exactly (case-sensitive)
 import { useSelector } from "react-redux";
@@ -31,12 +34,20 @@ const Navbar = () => {
   }, [navigate]);
 
   return (
-    <nav className="navbar overflow-hidden text-white flex justify-between items-center px-4">
-      <div>
-        <h1 className="text-xl font-bold">MySocial</h1>
-
-        <div className="flex gap-4 items-center mt-2">
-          <div className="nav_menu flex items-center gap-2">
+    <nav className="flex items-center justify-content-md-evenly navbar overflow-hidden px-4 text-white">
+        <div className="flex flex-col items-center headerprofile">
+            <div className="flex items-center gap-2">
+            <Link to={`/users/${userId}`} className="d-flex gap-2">
+              <div>
+                <ProfileImage src={profileImageUrl}alt="Profile" size="30px"/>
+              </div>
+               <p className="small m-0">{username}</p>
+            </Link>
+          </div>
+        </div>
+        <div className="gap-4 items-center mt-2 headermenu">
+          <div className="d-flex gap-2 items-center justify-content-around nav_menu">
+            <h5 className="text-xl font-bold">MySocial</h5>
             <form className="navbar_search">
               <input
                 type="text"
@@ -44,33 +55,31 @@ const Navbar = () => {
                 className="navbar_search_input"
               />
             </form>
-            <Link to="/">Home</Link>
           </div>
+          <div className="d-flex justify-content-between">
+            <div className="nav_menu w-25">
+               <i className="sidebar_icon">
+                <AiOutlineHome />
+               </i>
+              <Link to="/">Home</Link>
+            </div>
 
-          <div className="nav_menu">
-            <Link to="/bookmarks">Bookmarks</Link>
-          </div>
+            <div className="nav_menu w-25">
+              <i className="sidebar_icon">
+                <FaBookmark />
+              </i>
+              <Link to="/bookmarks">Bookmarks</Link>
+            </div>
 
-          <div className="nav_menu">
-            <Link to="/messages">Messages</Link>
-          </div>
-
-          <div className="nav_menu flex items-center gap-2">
-            <Link to={`/users/${userId}`} className="d-flex gap-2">
-            <div>
-              <ProfileImage
-              src={profileImageUrl}
-              alt="Profile"
-              size="30px"
-            />
-            </div>Profile</Link>
-            <p className="small m-0">{username}</p>
-            
+            <div className="nav_menu w-25">
+               <i className="sidebar_icon">
+                  <GoMail />
+                </i>
+              <Link to="/messages">Messages</Link>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div>
+        <div className="headerlogoutBtn">
         {userId ? (
           <button
             onClick={() => navigate("/logout")}

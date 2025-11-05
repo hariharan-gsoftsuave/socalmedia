@@ -2,10 +2,16 @@ import { Link } from "react-router-dom";
 import PostCard from "../components/PostCard";
 import store from "../store/store";
 import React from "react";
+import "../index.css";
+import { useDispatch } from "react-redux";
+import { uiSliceActions } from "../store/ui-slice";
+
 
 const user = store.getState().user.currentUser;
 console.log("Current User in Home:", user);
 const Home = () => {
+   const dispatch = useDispatch();
+   dispatch(uiSliceActions.closeThemeModal());
   const posts = [
     { id: 1, title: "My first post", content: "Hello world!" },
     { id: 2, title: "Another post", content: "React is awesome!" },
@@ -24,5 +30,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;

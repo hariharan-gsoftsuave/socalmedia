@@ -83,7 +83,7 @@ const Register = () => {
 
           <p className="register__redirect">
             Already have an account?{" "}
-            <span onClick={() => navigate("/login")}>Log In</span>
+            <span className="" onClick={() => navigate("/login")}>Log In</span>
           </p>
 
           <button type="submit" className="btn_primary">

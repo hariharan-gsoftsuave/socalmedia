@@ -12,10 +12,10 @@ const RootLayout = () => {
   return (
     <>
       <Navbar />
+      <Sidebar />
       <main className="main">
         <div className="container main_container">
-          <Sidebar />
-           {themeModalIsOpen && <ThemeModal />}
+          {themeModalIsOpen && <ThemeModal />}
           <Outlet />
           <Widgets />
         </div>

@@ -5,12 +5,11 @@ const initialState = {
   editProfileModalOpen: false,
   editPostModalOpen: false,
   postToEdit: "",
-  theme:
-    JSON.parse(localStorage.getItem("theme")) || {
-      primaryColor: "",
-      backgroundColor: "",
-      textColor: "",
-    },
+  theme: JSON.parse(localStorage.getItem("theme")) || {
+    primaryColor: "",
+    backgroundColor: "",
+    textColor: "",
+  },
 };
 
 const uiSlice = createSlice({
