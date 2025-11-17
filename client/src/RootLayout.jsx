@@ -17,9 +17,9 @@ const RootLayout = () => {
         <div className="container main_container">
           {themeModalIsOpen && <ThemeModal />}
           <Outlet />
-          <Widgets />
         </div>
       </main>
+      <Widgets />
     </>
   );
 };

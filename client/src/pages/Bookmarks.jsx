@@ -1,7 +1,13 @@
-const Bookmarks = () => (
+import React from "react";
+
+
+const Bookmarks = () => {
+
+  return (
   <div className="text-center mt-20 text-xl font-semibold">
     Bookmarks Page – coming soon 
   </div>
-);
+  );
+};
 
 export default Bookmarks;

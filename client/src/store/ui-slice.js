@@ -16,21 +16,28 @@ const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
+    // ✅ Theme Modal
     openThemeModal: (state) => {
       state.themeModalIsOpen = true;
     },
     closeThemeModal: (state) => {
       state.themeModalIsOpen = false;
     },
+
+    // ✅ Theme Change
     changeTheme: (state, action) => {
       state.theme = action.payload;
     },
+
+    // ✅ Edit Profile Modal
     openEditProfileModal: (state) => {
       state.editProfileModalOpen = true;
     },
     closeEditProfileModal: (state) => {
       state.editProfileModalOpen = false;
     },
+
+    // ✅ Edit Post Modal
     openEditPostModal: (state, action) => {
       state.editPostModalOpen = true;
       state.postToEdit = action.payload;
@@ -39,6 +46,14 @@ const uiSlice = createSlice({
       state.editPostModalOpen = false;
       state.postToEdit = "";
     },
+
+    // ✅ Close all modals (use in sidebar before opening theme)
+    closeAllModals: (state) => {
+      state.themeModalIsOpen = false;
+      state.editProfileModalOpen = false;
+      state.editPostModalOpen = false;
+      state.postToEdit = "";
+    }
   },
 });
 

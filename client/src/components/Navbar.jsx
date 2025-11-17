@@ -15,8 +15,6 @@ const Navbar = () => {
   const profileImageUrl = useSelector((state) => state?.user?.currentUser?.profilePhoto);
   const username = useSelector((state) => state?.user?.currentUser?.fullName);
 
-  console.log("Navbar - Current User ID:", userId, profileImageUrl);
-
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!token) {
@@ -46,7 +44,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="gap-4 items-center mt-2 headermenu">
-          <div className="d-flex gap-2 items-center justify-content-around nav_menu">
+          <div className="d-flex gap-2 mb-1 items-center justify-content-around">
             <h5 className="text-xl font-bold">MySocial</h5>
             <form className="navbar_search">
               <input
@@ -56,41 +54,19 @@ const Navbar = () => {
               />
             </form>
           </div>
-          <div className="d-flex justify-content-between">
-            <div className="nav_menu w-25">
-               <i className="sidebar_icon">
-                <AiOutlineHome />
-               </i>
-              <Link to="/">Home</Link>
-            </div>
-
-            <div className="nav_menu w-25">
-              <i className="sidebar_icon">
-                <FaBookmark />
-              </i>
-              <Link to="/bookmarks">Bookmarks</Link>
-            </div>
-
-            <div className="nav_menu w-25">
-               <i className="sidebar_icon">
-                  <GoMail />
-                </i>
-              <Link to="/messages">Messages</Link>
-            </div>
-          </div>
         </div>
         <div className="headerlogoutBtn">
         {userId ? (
           <button
             onClick={() => navigate("/logout")}
-            className="logout_btn text-white bg-red-500 px-3 py-1 rounded"
+            className="logout_btn bg-red-500 px-3 py-1 rounded"
           >
             Logout
           </button>
         ) : (
           <Link
             to="/login"
-            className="login_btn text-white bg-blue-500 px-3 py-1 rounded"
+            className="login_btn bg-blue-500 px-3 py-1 rounded"
           >
             Login
           </Link>

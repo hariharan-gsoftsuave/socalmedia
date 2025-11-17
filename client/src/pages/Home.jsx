@@ -1,33 +1,80 @@
 import { Link } from "react-router-dom";
 import PostCard from "../components/PostCard";
-import store from "../store/store";
-import React from "react";
+import CreatePost from "../components/CreatePost";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { use, useEffect, useState } from "react";
 import "../index.css";
-import { useDispatch } from "react-redux";
-import { uiSliceActions } from "../store/ui-slice";
+import Feeds from "../components/Feeds";
 
-
-const user = store.getState().user.currentUser;
-console.log("Current User in Home:", user);
 const Home = () => {
-   const dispatch = useDispatch();
-   dispatch(uiSliceActions.closeThemeModal());
-  const posts = [
-    { id: 1, title: "My first post", content: "Hello world!" },
-    { id: 2, title: "Another post", content: "React is awesome!" },
-  ];
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const token = useSelector((state) => state?.user?.currentUser?.token);
+
+  const createdPost = async (data) => {
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/posts`,
+        data,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status !== 201) {
+        throw new Error("Failed to create post.");
+      }else {
+        setError("");
+      }
+      console.log("Post created successfully:", response.data);
+     const newPost = response.data;
+      setPosts([newPost, ...posts]);
+      
+    } catch (err) {
+      setError(err?.response?.data?.message || "Failed to create post.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  //funnction to fetch posts
+  const fetchPosts = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get( 
+        `${import.meta.env.VITE_API_URL}/posts`,
+        { withCredentials: true, headers: { Authorization: `Bearer ${token}` } }
+      );
+      setPosts(response.data);
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, [setPosts]);
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Home Feed</h2>
-      <div className="grid gap-4">
-        {posts.map((post) => (
-          <Link key={post.id} to={`/post/${post.id}`}>
-            <PostCard post={post} />
-          </Link>
-        ))}
-      </div>
-    </div>
+    <section className="mainHome-container">
+      <CreatePost 
+        onCreatePost={createdPost}  // ✅ corrected prop name
+        error={error}
+        isLoading={isLoading}
+      />
+      <Feeds posts={posts} onSetPosts={setPosts} />
+      
+    </section>
   );
 };
+
 export default Home;

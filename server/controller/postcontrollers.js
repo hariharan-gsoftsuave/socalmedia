@@ -148,7 +148,7 @@ const getFollowing = async(req, res,next)=>{
 };
 
 //============================ ***** Get like and dislike post ***** ====================
-// GET : api/user/:id/like
+// GET : api/posts/:id/like
 //PROTECTED
 const likeDislikePost = async(req, res,next)=>{ 
     try{

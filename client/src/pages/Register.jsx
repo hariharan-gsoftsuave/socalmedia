@@ -86,7 +86,7 @@ const Register = () => {
             <span className="" onClick={() => navigate("/login")}>Log In</span>
           </p>
 
-          <button type="submit" className="btn_primary">
+          <button type="submit" className="btn_primary bg-info">
             Register
           </button>
         </form>

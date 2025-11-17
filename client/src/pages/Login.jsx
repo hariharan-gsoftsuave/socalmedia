@@ -49,15 +49,16 @@ const Login = () => {
         <div className="password__controller">
                     <input
                       type={showPassword ? "text" : "password"}
-                      name="password border p-2 rounded"
+                      name="password"
                       placeholder="Password"
+                      className="border p-2 rounded"
                       onChange={(e) => setForm({ ...form, password: e.target.value })}
                     />
                     <span className="password__icon" onClick={() => setShowPassword(!showPassword)}>
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
                   </div>
-        <button type="submit" className="bg-blue-600 text-white py-2 rounded">Login</button>
+        <button type="submit" className="bg-blue-600 text-white py-2 rounded bg-info">Login</button>
       </form>
       <p className="text-center mt-3">
         Don’t have an account? <Link to="/register" className="text-blue-500">Register</Link>
