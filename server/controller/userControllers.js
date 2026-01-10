@@ -80,7 +80,7 @@ const loginUser = async (req, res, next) => {
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1w" }
     );
 
     const { password: _, ...userinfo } = user.toObject(); // remove password from user data
@@ -139,7 +139,7 @@ const editUser = async (req, res, next) => {
 };
 
 //==================    * * * FOLLOW/UNFOLLOW USER * * *   ========================
-//PATCH : api/users/:id/follow-unfollow
+//PATCH : api/users/follow-unfollow/:id
 //PROTECTED
 const followUnfollowUser = async (req, res, next) => {
   try {
@@ -227,8 +227,8 @@ const changeUserAvatar = async (req, res, next) => {
         const updatedUser = await userModel.findByIdAndUpdate(
           req.user.id,
           { profilePhoto: result.secure_url },
-          { new: true }
-        );
+          { new: true },
+        ).select('-password');
 
         // Delete the local file after upload
         fs.unlink(uploadPath, (err) => {
@@ -246,5 +246,52 @@ const changeUserAvatar = async (req, res, next) => {
     return next(new HttpError(error || "Something went wrong", 500));
   }
 };
+//==================    * * * GOOGLE LOGIN * * *   ========================
+//POST : api/users/google-login
+//UNPROTECTED
 
-module.exports = {registerUser,loginUser,getUser,getUsers,editUser,followUnfollowUser,changeUserAvatar};
+const Googlelogin = async (req, res) => {
+  try {
+    const { name, email, googleId } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        googleId,
+        password: null, // Google users don't need a password
+      });
+    }
+    const generateToken = (id) => {
+      return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: "30d",
+      });
+    };
+
+
+    const token = generateToken(user._id);
+
+    res.status(200).json({
+      token,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      googleId: user.googleId,
+    });
+
+  } catch (error) {
+    console.error("Google Login Error:", error);
+    res.status(500).json({
+      message: "Failed to login with Google",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {registerUser,loginUser,getUser,getUsers,editUser,followUnfollowUser,changeUserAvatar,Googlelogin};

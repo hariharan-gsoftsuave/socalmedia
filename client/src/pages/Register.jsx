@@ -38,7 +38,7 @@ const Register = () => {
 
   return (
     <section className="register">
-      <div className="register-container container">
+      <div className="align-items-center container flex-column justify-content-center register-container">
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit} className="d-flex flex-column gap-3 m-5">
           {error && <p className="form__error-message bg-danger form__error-message m-0 p-2 rounded-3 text-bg-danger text-center">{error}</p>}

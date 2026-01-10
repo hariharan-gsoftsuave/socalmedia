@@ -6,7 +6,7 @@ import { FcLike } from "react-icons/fc";
 import "../index.css";
 
 const LikeDislikePost = ({ post }) => {
-    console.log("LikeDislikePost received post:", post);
+
   const [currentPost, setCurrentPost] = useState(post); 
   const [postLiked, setPostLiked] = useState(false);
 
@@ -17,7 +17,7 @@ const LikeDislikePost = ({ post }) => {
     try {
       const response = await axios.patch(
         `${import.meta.env.VITE_API_URL}/posts/${currentPost._id}/like`,
-        {}, // Empty body
+        {},
         {
           withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },
@@ -31,14 +31,16 @@ const LikeDislikePost = ({ post }) => {
       console.log("Error liking/disliking post:", error);
     }
   };
+  useEffect(() => {
+    setCurrentPost(post);
+  }, [post]);
 
-  const checkIfUserLikedPost = () => {
-    setPostLiked(currentPost?.likes?.includes(userId));
-  };
 
   useEffect(() => {
-    checkIfUserLikedPost();
-  }, [currentPost]);
+    if (currentPost?.likes && userId) {
+      setPostLiked(currentPost.likes.includes(userId.toString()));
+    }
+  }, [currentPost, userId]);
 
   return (
     <button className="like-dislike-btn" onClick={handleLikeDislikePost}>

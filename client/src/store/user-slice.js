@@ -1,20 +1,38 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  currentUser: JSON.parse(localStorage.getItem("currentUser")) || null,
+  socket: null,
+  onlineUsers: [],
+};
 
 const userSlice = createSlice({
-  name: 'user',
-  initialState: {currentUser:JSON.parse(localStorage.getItem("currentUser")) || null,
-  socket: null,onlineUsers:[]},
-   reducers: { 
-        changeCurrentUser:(state, action)=>{
-            state.currentUser=action.payload;
-        },
-        setSocket:(state, action)=>{
-            state.socket=action.payload;
-        },
-        setOnlineUsers:(state, action)=>{
-            state.onlineUsers=action.payload;   
-        }
-    }
+  name: "user",
+  initialState,
+  reducers: {
+    changeCurrentUser: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        ...action.payload,
+      };
+
+      // Persist user
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(state.currentUser)
+      );
+    },
+    setSocket: (state, action) => {
+      state.socket = action.payload;
+    },
+    setOnlineUsers: (state, action) => {
+      state.onlineUsers = action.payload;
+    },
+    logout: (state) => {
+      state.currentUser = null;
+      localStorage.removeItem("currentUser");
+    },
+  },
 });
 
 export const userActions = userSlice.actions;

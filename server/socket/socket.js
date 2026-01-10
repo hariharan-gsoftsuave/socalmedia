@@ -10,8 +10,8 @@ const io = new Server(server, {
     },
 });
 
-const getReceiverSocketId = (conversation, userId) => {
-    return userSocketMap[recipientId];
+const getReceiverSocketId = (userId) => {
+    return userSocketMap[userId];
 };
 
 let userSocketMap = {};
@@ -30,6 +30,10 @@ io.on("connection", (socket) => {
     }) 
 });
 
-module.exports = server;
+module.exports = {
+  server,
+  io,
+  getReceiverSocketId,
+};
 
 

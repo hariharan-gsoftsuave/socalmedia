@@ -5,7 +5,7 @@ import axios from "axios";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 
 const BookmarksPost = ({ post }) => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(post);
   const token = useSelector((state) => state?.user?.currentUser?.token);
   const userId = useSelector((state) =>
     state?.user?.currentUser?._id
@@ -34,6 +34,10 @@ const BookmarksPost = ({ post }) => {
   useEffect(() => {
     fetchBookmarkStatus();
   }, []);
+  useEffect(() => {
+  setIsBookmarked(post);
+}, [post]);
+
 
   // Toggle bookmark using Route C
   const toggleBookmark = async () => {

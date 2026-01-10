@@ -8,6 +8,7 @@ const {
   editUser,
   followUnfollowUser,
   changeUserAvatar,
+  Googlelogin
 } = require("../controller/userControllers");
 
 const {
@@ -20,18 +21,18 @@ const {
   likeDislikePost,
   getFollowing,
   getUserBookmarks,
-  createBookmark,
-} = require("../controller/postControllers");
+  createBookmark
+} = require("../controller/postcontrollers");
 
 const {
   createComment,
   getCommentsOfPost,
-  deleteComment,
+  deleteComment
 } = require("../controller/commentControllers");
 
 const {
   createMessage,
-  getMessagesOfConversation,
+  getMessagesOfConversation
 } = require("../controller/messagecontrollers");    
 
 const authMiddleware = require("../middleware/authMiddleware");
@@ -39,13 +40,15 @@ const authMiddleware = require("../middleware/authMiddleware");
 // ============================ USER ROUTES ============================
 router.post("/users/register", registerUser);
 router.post("/users/login", loginUser);
-router.get("/users/:id", authMiddleware, getUser);
-router.get("/users", authMiddleware, getUsers);
-router.patch("/users/:id", authMiddleware, editUser);
-router.patch("/users/:id/follow-unfollow", authMiddleware, followUnfollowUser);
-router.post("/users/avatar", authMiddleware, changeUserAvatar);
-router.get("/users/:id/posts", authMiddleware, getUserPosts);
+router.post("/users/google-login", Googlelogin);
+
 router.get("/users/bookmarks", authMiddleware, getUserBookmarks);
+router.get("/users/posts/:id", authMiddleware, getUserPosts);
+router.get("/users", authMiddleware, getUsers);
+router.get("/users/:id", authMiddleware, getUser);
+router.patch("/users/:id", authMiddleware, editUser);
+router.patch("/users/followunfollow/:id", authMiddleware, followUnfollowUser);
+router.post("/users/avatar", authMiddleware, changeUserAvatar);
 
 // ============================ POST ROUTES ============================
 router.post("/posts", authMiddleware, createPost);
@@ -63,9 +66,7 @@ router.get("/comments/:id", authMiddleware, getCommentsOfPost);
 router.delete("/comments/:id", authMiddleware, deleteComment);
 
 // ============================ MESSAGE ROUTES ============================
-
 router.post("/messages", authMiddleware, createMessage);
-router.get("/messages/:conversationId", authMiddleware, getMessagesOfConversation); 
-
+router.get("/messages/:conversationId", authMiddleware, getMessagesOfConversation);
 
 module.exports = router;

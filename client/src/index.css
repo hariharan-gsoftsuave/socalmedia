@@ -383,7 +383,7 @@ body.purple{
   --color-primary: white;
 }
 
-body.dev {
+body.div {
   --color-layer: linear-gradient(0deg, #000000, #23d584);
   --color-primary: white;
 }
@@ -503,3 +503,99 @@ width: 100%;
     text-decoration: none;
 }
 
+.loader {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #666;
+}
+
+.load-more-btn {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border: none;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.load-more-btn:hover {
+  background: #0056b3;
+}
+.avatar_image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.profile_image_edit{ 
+    left: 12%;
+    top: 11%;
+    background: #f8f8f8c7;
+    border-radius: 50%;
+    height: 75%;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    transition: var(--transition);  
+}
+.profile_image_edit:hover{
+    opacity: 1;
+    background: #ffffffd1;
+}
+.width_fit_content{
+    width: fit-content !important;
+}
+.profile_image_save{
+    top: -3px;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+.modal_overlay{
+  position: absolute;
+    top: 0;
+    left: 0;
+    background: #ffffff75;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal_content{
+    padding: 11px;
+    background: white;
+    height: fit-content;
+    width: fit-content;
+}
+.overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #89dcff8c;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+    align-items: center;
+}
+.edDeBtn{
+      position: absolute;
+    background: wheat;
+    padding: 9px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    top: 0;
+    margin: 0;
+    right: 100%;
+}

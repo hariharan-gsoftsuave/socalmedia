@@ -3,7 +3,7 @@ import PostCard from "../components/PostCard";
 import CreatePost from "../components/CreatePost";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../index.css";
 import Feeds from "../components/Feeds";
 
@@ -46,26 +46,29 @@ const Home = () => {
     }
   };
 
-  //funnction to fetch posts
-  const fetchPosts = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get( 
-        `${import.meta.env.VITE_API_URL}/posts`,
-        { withCredentials: true, headers: { Authorization: `Bearer ${token}` } }
-      );
-      setPosts(response.data);
-    } catch (err) {
-      console.error("Error fetching posts:", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, [setPosts]);
+  // function to fetch posts
+    useEffect(() => {
+      const fetchPosts = async () => {
+        setIsLoading(true);
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}/posts`,
+            { withCredentials: true, headers: { Authorization: `Bearer ${token}` } }
+          );
+          setPosts(response.data);
+        } catch (err) {
+          console.error("Error fetching posts:", err);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+  
+      // fetch posts when token (or other dependencies) change
+      fetchPosts();
+    }, [token, setPosts]);
 
   return (
-    <section className="mainHome-container">
+    <section className="mainHome-container w-100">
       <CreatePost 
         onCreatePost={createdPost}  // ✅ corrected prop name
         error={error}

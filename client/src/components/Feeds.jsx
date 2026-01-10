@@ -1,8 +1,6 @@
 import React from "react";
 import Feed from "./Feed";
 
-
-
 const Feeds = ({ posts, onSetPosts }) => {
   return (
     <div className="posts-container">   

@@ -16,7 +16,7 @@ const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    // ✅ Theme Modal
+    // Theme Modal
     openThemeModal: (state) => {
       state.themeModalIsOpen = true;
     },
@@ -24,12 +24,12 @@ const uiSlice = createSlice({
       state.themeModalIsOpen = false;
     },
 
-    // ✅ Theme Change
+    // Theme Change
     changeTheme: (state, action) => {
       state.theme = action.payload;
     },
 
-    // ✅ Edit Profile Modal
+    // Edit Profile Modal
     openEditProfileModal: (state) => {
       state.editProfileModalOpen = true;
     },
@@ -37,7 +37,7 @@ const uiSlice = createSlice({
       state.editProfileModalOpen = false;
     },
 
-    // ✅ Edit Post Modal
+    //  Edit Post Modal
     openEditPostModal: (state, action) => {
       state.editPostModalOpen = true;
       state.postToEdit = action.payload;
@@ -45,6 +45,10 @@ const uiSlice = createSlice({
     closeEditPostModal: (state) => {
       state.editPostModalOpen = false;
       state.postToEdit = "";
+    },
+    // Loading State
+    setLoading: (state, action) => {
+      state.loading = action.payload;
     },
 
     // ✅ Close all modals (use in sidebar before opening theme)

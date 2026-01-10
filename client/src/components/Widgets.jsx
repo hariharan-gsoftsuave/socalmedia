@@ -2,9 +2,9 @@ import React from "react";
 
 const Widgets = () => {
   return (
-    <dev className="widgets">
+    <div className="widgets">
         <h2>Widgets Section</h2>
-    </dev>
+    </div>
   );
 };
 

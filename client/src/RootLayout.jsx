@@ -8,12 +8,16 @@ import ThemeModal from "./components/ThemeModal";
 
 const RootLayout = () => {
   const themeModalIsOpen = useSelector((state) => state.ui.themeModalIsOpen);
+  const loading = useSelector((state) => state.ui.loading);
 
   return (
     <>
       <Navbar />
       <Sidebar />
       <main className="main">
+        {loading && (
+            <div className="text-center overlay">Loading...</div>
+          )}
         <div className="container main_container">
           {themeModalIsOpen && <ThemeModal />}
           <Outlet />

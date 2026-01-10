@@ -1,7 +1,7 @@
 const HttpError = require('../models/errorModel');
 const PostModel = require('../models/postModel');
 const UserModel = require('../models/userModel');
-
+const { io, getReceiverSocketId } = require("../socket/socket");
 
 const {v4:uuid}=require('uuid');
 const util = require('util');
@@ -15,58 +15,52 @@ const { constants } = require('buffer');
 //============================ ***** create post ***** ====================
 // PPOST : api/post
 //PROTECTED
-const imageMove = util.promisify(fs.rename); // if you're using 'mv' from express-fileupload, you can use util.promisify for async/await
+const imageMove = util.promisify(fs.rename);
+ // if you're using 'mv' from express-fileupload, you can use util.promisify for async/await
 
-const createPost = async (req, res, next) => {
-    try {
-        const { body } = req.body;
+const createPost = async (req, res, next) => { 
+    try { 
+        const { body } = req.body; 
+        if (!body || !req.files || !req.files.image) { 
+            return next(new HttpError('Fill in text field and choose an image', 422)); 
+        } 
+        const image = req.files.image; 
+        if (image.size > 1000000) { 
+            return next(new HttpError("Profile picture too big. Should be less than 1000KB", 422)); 
+        } 
+        let fileName = image.name; 
+        const fileParts = fileName.split("."); 
+        fileName = fileParts[0] + uuid() + "." + fileParts[fileParts.length - 1]; 
+        const uploadPath = path.join(__dirname, '..', 'uploads', fileName); 
+        //Move the file await 
+        image.mv(uploadPath); 
+        //Upload to Cloudinary 
+        const result = await cloudinary.uploader.upload(uploadPath, { resource_type: 'image' }); 
+        if (!result.secure_url) { return next(new HttpError("Couldn't upload image to Cloudinary", 422)); } 
+        
+        //Save post to DB 
+        const newPost = await PostModel.create({ creator: req.user.id, body, image: result.secure_url }); 
+        await UserModel.findByIdAndUpdate(req.user.id, { $push: { posts: newPost._id } });
+        const user = await UserModel.findById(req.user.id).select("followers fullName");
 
-        if (!body || !req.files || !req.files.image) {
-            return next(new HttpError('Fill in text field and choose an image', 422));
-        }
+        user.followers.forEach((followerId) => {
+       const receiverSocketId = getReceiverSocketId(followerId.toString());
 
-        const image = req.files.image;
-
-        if (image.size > 1000000) {
-            return next(new HttpError("Profile picture too big. Should be less than 1000KB", 422));
-        }
-
-        let fileName = image.name;
-        const fileParts = fileName.split(".");
-        fileName = fileParts[0] + uuid() + "." + fileParts[fileParts.length - 1];
-
-        const uploadPath = path.join(__dirname, '..', 'uploads', fileName);
-
-        // Move the file
-        await image.mv(uploadPath);
-
-        // Upload to Cloudinary
-        const result = await cloudinary.uploader.upload(uploadPath, {
-            resource_type: 'image'
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("newPostNotification", {
+          type: "NEW_POST",
+          message: `${user.fullName} added a new post`,
+          postId: newPost._id,
+          creatorId: req.user.id,
         });
+      }
+    });
+        res.status(201).json(newPost); } 
+        catch (error) {
+             console.error(error); return next(new HttpError(error.message || "Server error", 500)); 
+            } 
+    };
 
-        if (!result.secure_url) {
-            return next(new HttpError("Couldn't upload image to Cloudinary", 422));
-        }
-
-        // Save post to DB
-        const newPost = await PostModel.create({
-            creator: req.user.id,
-            body,
-            image: result.secure_url
-        });
-
-        await UserModel.findByIdAndUpdate(req.user.id, {
-            $push: { posts: newPost._id }
-        });
-
-        res.status(201).json(newPost);
-
-    } catch (error) {
-        console.error(error);
-        return next(new HttpError(error.message || "Server error", 500));
-    }
-};
 
 
 //============================ ***** Get post ***** ====================
@@ -74,8 +68,8 @@ const createPost = async (req, res, next) => {
 //PROTECTED
 const getPost = async(req, res,next)=>{ 
     try{
-        const {id}=req.params;
-        const post = await PostModel.findById(id).populate("creator").populate({path:"comments",options:{sort:{createAT:-1}}})
+        const {id}= req.params;
+        const post = await PostModel.findById(id).populate("creator").populate({path:"comments",options:{sort:{createAT:-1}}});
         res.status(200).json(post);
     }catch(error){
         return next(new HttpError(error))
@@ -119,14 +113,14 @@ const updatePost = async(req, res,next)=>{
 //PROTECTED
 const deletePost = async(req, res,next)=>{ 
     try{
-        const postid = req.params.id;
+        const { id } = req.params;
         //get post from db
-        const post = await PostModel.findById(postid);
+        const post = await PostModel.findById(id);
         //check if creator of the Post is the logged in user
-        if(post?.creator != req.user.id){
+        if(post?.creator?.toString() != req.user?.id.toString()){
             return next (new HttpError("Your can't delete this post since you are not the creator",403))
         }
-        const deletedPost =await PostModel.findByIdAndDelete(postid,{body},{new:true})
+        const deletedPost = await PostModel.findByIdAndDelete(id)
         await UserModel.findByIdAndUpdate(post?.creator , {$pull:{posts:post?._id}})
         res.json(deletedPost).status(200);
     }catch(error){
@@ -173,8 +167,8 @@ const likeDislikePost = async(req, res,next)=>{
 //PROTECTED
 const getUserPosts = async(req, res,next)=>{ 
     try{
-        const userid = req.user.id;
-        const posts = await UserModel.findById(userid).populate({path:"post",options:{sort:{createdAt:-1}}})
+        const {id}= req.params;
+        const posts = await PostModel.find({creator:id}).sort({createdAt:-1});
         res.json(posts).status(200);
     }catch(error){
         return next(new HttpError(error))
